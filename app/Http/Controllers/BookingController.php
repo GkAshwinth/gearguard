@@ -70,7 +70,7 @@ class BookingController extends Controller
             // Calculate total cost securely on the server side to satisfy DB constraint
             $equipment = Equipment::withoutGlobalScopes()->findOrFail($validated['equipment_id']);
             $days = \Carbon\Carbon::parse($validated['start_date'])->diffInDays(\Carbon\Carbon::parse($validated['end_date'])) + 1;
-            $totalCost = $days * $equipment->daily_rate;
+            $totalCost = $days * (float) $equipment->getRawOriginal('daily_rate');
 
             // 3. Save the booking
             $booking = Booking::create([
