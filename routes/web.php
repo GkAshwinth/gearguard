@@ -48,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
 // ── Owner / Admin Routes ───────────────────────────────────────────────────
 // SECURITY: double-protected — requires authentication AND the 'owner' role.
 
-Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':owner', 'owner.2fa'])->prefix('owner')->name('owner.')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':owner'])->prefix('owner')->name('owner.')->group(function () {
 
     // Owner dashboard (bookings overview + metrics)
     Route::get('/dashboard', [BookingController::class, 'ownerDashboard'])->name('dashboard');
