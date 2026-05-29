@@ -76,17 +76,41 @@ class BookingController extends Controller
                 'end_date' => $validated['end_date'],
                 'total_cost' => $totalCost,
                 'status' => 'pending', // Requires admin approval
+                'payment_status' => 'unpaid',
             ]);
         });
 
-        // Dispatch background job and event
-        if ($booking) {
-            SendBookingConfirmationEmail::dispatch($booking);
-            BookingCreated::dispatch($booking);
-        }
+        // 4. Initialize Stripe Checkout
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_mock'));
 
-        // Redirect back to dashboard with a success message
-        return redirect()->route('dashboard')->with('success', 'Booking submitted successfully! Waiting for admin approval.');
+        $equipment = Equipment::withoutGlobalScopes()->findOrFail($validated['equipment_id']);
+
+        try {
+            $session = \Stripe\Checkout\Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'lkr',
+                        'product_data' => [
+                            'name' => 'Rental: ' . $equipment->name,
+                            'description' => 'From ' . \Carbon\Carbon::parse($validated['start_date'])->format('M d') . ' to ' . \Carbon\Carbon::parse($validated['end_date'])->format('M d'),
+                        ],
+                        'unit_amount' => (int) ($booking->total_cost * 100),
+                    ],
+                    'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => route('payment.success', ['booking' => $booking->id]) . '?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('payment.cancel', ['booking' => $booking->id]),
+                'client_reference_id' => $booking->id,
+                'customer_email' => auth()->user()->email,
+            ]);
+
+            return redirect()->away($session->url);
+        } catch (\Exception $e) {
+            $booking->delete();
+            return back()->with('error', 'Could not initialize payment gateway: ' . $e->getMessage());
+        }
     }
 
     /**
