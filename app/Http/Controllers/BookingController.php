@@ -33,7 +33,7 @@ class BookingController extends Controller
         }
 
         $days  = (new \DateTime($startDate))->diff(new \DateTime($endDate))->days + 1;
-        $total = $days * $equipment->daily_rate;
+        $total = $days * (float) $equipment->getRawOriginal('daily_rate');
 
         return view('client.checkout', compact('equipment', 'startDate', 'endDate', 'days', 'total'));
     }
