@@ -82,7 +82,7 @@
                         <p class="text-sm text-slate-400 mt-2 line-clamp-2 leading-relaxed">{{ $item->description }}</p>
                         <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
                             <span class="text-slate-400 text-xs">Daily Rate</span>
-                            <p class="text-[#5c54f1] font-extrabold text-base">LKR {{ number_format($item->daily_rate) }}<span class="text-slate-400 font-normal text-xs">/day</span></p>
+                            <p class="text-[#5c54f1] font-extrabold text-base">LKR {{ $item->daily_rate }}<span class="text-slate-400 font-normal text-xs">/day</span></p>
                         </div>
                     </div>
                 </a>
