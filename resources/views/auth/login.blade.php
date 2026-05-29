@@ -1,10 +1,11 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <a href="{{ route('home') }}" class="flex justify-center mb-6 hover:opacity-80 transition">
-                <x-application-mark class="h-16 w-auto" />
-            </a>
         </x-slot>
+
+        <a href="{{ route('home') }}" class="flex justify-center mb-6 hover:opacity-80 transition">
+            <x-application-mark class="h-16 w-auto" />
+        </a>
 
         <h2 class="text-3xl font-extrabold text-white text-center mb-2">Sign in to GearGuard</h2>
         <p class="text-sm text-slate-400 text-center mb-8">
