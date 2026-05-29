@@ -69,6 +69,11 @@ class BookingController extends Controller
             $days = \Carbon\Carbon::parse($validated['start_date'])->diffInDays(\Carbon\Carbon::parse($validated['end_date'])) + 1;
             $totalCost = $days * (float) $equipment->getRawOriginal('daily_rate');
 
+            // Add optional insurance fee
+            if ($request->has('insurance')) {
+                $totalCost += 2500;
+            }
+
             // 3. Save the booking
             $booking = Booking::create([
                 'user_id' => auth()->id(),

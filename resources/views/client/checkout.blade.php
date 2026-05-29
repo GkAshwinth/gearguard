@@ -65,7 +65,7 @@
             </div>
 
             {{-- Mock Checkout Form --}}
-            <form action="{{ route('bookings.store') }}" method="POST" class="space-y-5 mt-6">
+            <form action="{{ route('bookings.store') }}" method="POST" class="space-y-5 mt-6" x-data="{ baseTotal: {{ (float)$total }}, get finalTotal() { return this.insurance ? this.baseTotal + 2500 : this.baseTotal }, insurance: false }">
                 @csrf
                 <input type="hidden" name="equipment_id" value="{{ $equipment->id }}">
                 <input type="hidden" name="start_date" value="{{ $startDate }}">
@@ -92,10 +92,20 @@
                     </div>
                 </div>
 
+                <div class="mt-4 p-4 bg-slate-800/80 border border-slate-700 rounded-xl flex items-start gap-3">
+                    <div class="flex items-center h-5 mt-0.5">
+                        <input id="insurance" name="insurance" type="checkbox" value="1" x-model="insurance" class="w-5 h-5 bg-slate-900 border-slate-600 rounded text-orange-500 focus:ring-orange-500 focus:ring-offset-slate-800 cursor-pointer">
+                    </div>
+                    <div>
+                        <label for="insurance" class="font-bold text-white cursor-pointer select-none">Add Damage Waiver & Insurance (+LKR 2,500)</label>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">Protect yourself from accidental damage liability. Highly recommended for expensive gear.</p>
+                    </div>
+                </div>
+
                 <div class="pt-4">
                     <button type="submit"
                             class="w-full py-3 bg-[#ea580c] hover:bg-[#c2410c] rounded-md font-bold text-lg text-white transition shadow-sm">
-                        Pay LKR {{ number_format($total, 2) }}
+                        Pay LKR <span x-text="finalTotal.toLocaleString('en-US', {minimumFractionDigits: 2})"></span>
                     </button>
                 </div>
 
