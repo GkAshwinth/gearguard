@@ -1,66 +1,115 @@
 <x-app-layout title="Confirm Booking">
-    <div class="max-w-2xl mx-auto px-4 py-10">
-        <h1 class="text-2xl font-bold text-gray-900 mb-6">Confirm Your Booking</h1>
+    <div class="max-w-4xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        
+        {{-- Left Column: Equipment & Details Summary --}}
+        <div>
+            <h1 class="text-3xl font-extrabold text-white mb-6">Confirm Your Booking</h1>
 
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
-            <div class="flex gap-4">
-                <img src="{{ $equipment->image_url }}" alt="{{ $equipment->name }}"
-                     class="w-24 h-24 object-cover rounded-xl">
-                <div>
-                    <span class="text-xs text-sky-600 font-medium bg-sky-50 px-2 py-1 rounded-full">{{ $equipment->category }}</span>
-                    <h2 class="text-xl font-bold text-gray-900 mt-1">{{ $equipment->name }}</h2>
-                    <p class="text-gray-500 text-sm">{{ $equipment->description }}</p>
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl p-6 mb-6">
+                <div class="flex gap-4">
+                    <img src="{{ $equipment->image_url }}" alt="{{ $equipment->name }}"
+                         class="w-24 h-24 object-cover rounded-xl border border-slate-800">
+                    <div>
+                        <span class="text-xs text-indigo-400 font-bold bg-indigo-950/60 border border-indigo-900/50 px-2.5 py-1 rounded-full uppercase tracking-wider">{{ $equipment->category }}</span>
+                        <h2 class="text-xl font-bold text-white mt-3">{{ $equipment->name }}</h2>
+                        <p class="text-slate-400 text-sm mt-1 line-clamp-2 leading-relaxed">{{ $equipment->description }}</p>
+                    </div>
+                </div>
+
+                <hr class="border-slate-800 my-6">
+
+                <div class="space-y-4 text-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">Start date</span>
+                        <span class="font-semibold text-white">{{ \Carbon\Carbon::parse($startDate)->format('D, M d, Y') }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">End date</span>
+                        <span class="font-semibold text-white">{{ \Carbon\Carbon::parse($endDate)->format('D, M d, Y') }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">Duration</span>
+                        <span class="font-semibold text-white">{{ $days }} day{{ $days > 1 ? 's' : '' }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">Daily rate</span>
+                        <span class="font-semibold text-white">LKR {{ number_format($equipment->daily_rate) }}</span>
+                    </div>
+                    
+                    <hr class="border-slate-800">
+                    
+                    <div class="flex justify-between items-center text-lg font-bold text-indigo-400">
+                        <span>Total</span>
+                        <span>LKR {{ number_format($total) }}</span>
+                    </div>
                 </div>
             </div>
 
-            <hr class="my-5">
-
-            <div class="space-y-3 text-sm">
-                <div class="flex justify-between">
-                    <span class="text-gray-500">Start date</span>
-                    <span class="font-medium">{{ \Carbon\Carbon::parse($startDate)->format('D, M d, Y') }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-500">End date</span>
-                    <span class="font-medium">{{ \Carbon\Carbon::parse($endDate)->format('D, M d, Y') }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-500">Duration</span>
-                    <span class="font-medium">{{ $days }} day{{ $days > 1 ? 's' : '' }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-500">Daily rate</span>
-                    <span class="font-medium">LKR {{ number_format($equipment->daily_rate) }}</span>
-                </div>
-                <hr>
-                <div class="flex justify-between text-lg font-bold text-sky-600">
-                    <span>Total</span>
-                    <span>LKR {{ number_format($total) }}</span>
-                </div>
+            <div class="bg-indigo-950/40 border border-indigo-900/40 rounded-2xl p-5 text-sm text-indigo-300 leading-relaxed shadow-sm">
+                <span class="font-bold text-indigo-200">ℹ Approval Required:</span> Your booking will be set to <strong class="text-indigo-200">pending</strong> until approved by the admin. You will see status updates in your client dashboard.
             </div>
         </div>
 
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-sm text-amber-800">
-            <strong>Note:</strong> Your booking will be <strong>pending</strong> until approved by the admin.
-            You will see status updates in your dashboard.
-        </div>
+        {{-- Right Column: Screenshot #4 Payment Details Card --}}
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8">
+            <h2 class="text-2xl font-bold text-white mb-6">Payment Details</h2>
 
-        <form action="{{ route('booking.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="equipment_id" value="{{ $equipment->id }}">
-            <input type="hidden" name="start_date" value="{{ $startDate }}">
-            <input type="hidden" name="end_date" value="{{ $endDate }}">
-
-            <div class="flex gap-3">
-                <a href="{{ route('equipment.show', $equipment) }}"
-                   class="flex-1 text-center border border-gray-200 text-gray-600 py-3 rounded-xl font-medium hover:bg-gray-50 transition">
-                    ← Back
-                </a>
-                <button type="submit"
-                        class="flex-1 bg-sky-600 text-white py-3 rounded-xl font-semibold hover:bg-sky-700 transition">
-                    Confirm Booking
+            {{-- Method Tabs --}}
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <button type="button" class="w-full py-3 text-center rounded-xl font-bold bg-[#5c54f1] text-white transition shadow-lg">
+                    Credit Card
+                </button>
+                <button type="button" class="w-full py-3 text-center rounded-xl font-bold bg-slate-800/80 border border-slate-700/50 text-slate-400 hover:text-slate-200 transition">
+                    Cash on Delivery
                 </button>
             </div>
-        </form>
+
+            {{-- Card Details Mock Form --}}
+            <form action="{{ route('booking.store') }}" method="POST" class="space-y-5">
+                @csrf
+                <input type="hidden" name="equipment_id" value="{{ $equipment->id }}">
+                <input type="hidden" name="start_date" value="{{ $startDate }}">
+                <input type="hidden" name="end_date" value="{{ $endDate }}">
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">Name on Card</label>
+                    <input type="text" class="block w-full bg-white text-slate-900 placeholder-slate-400 border border-slate-700 rounded-xl px-4 py-3 shadow-inner focus:ring-orange-500 focus:border-orange-500 font-medium" placeholder="John Doe" required />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">Card Number</label>
+                    <input type="text" class="block w-full bg-white text-slate-900 placeholder-slate-400 border border-slate-700 rounded-xl px-4 py-3 shadow-inner focus:ring-orange-500 focus:border-orange-500 font-medium" placeholder="0000 0000 0000 0000" required />
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2">Expiry Date</label>
+                        <input type="text" class="block w-full bg-white text-slate-900 placeholder-slate-400 border border-slate-700 rounded-xl px-4 py-3 shadow-inner focus:ring-orange-500 focus:border-orange-500 font-medium" placeholder="MM/YY" required />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2">CVV</label>
+                        <input type="password" maxlength="3" class="block w-full bg-white text-slate-900 placeholder-slate-400 border border-slate-700 rounded-xl px-4 py-3 shadow-inner focus:ring-orange-500 focus:border-orange-500 font-medium" placeholder="123" required />
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit"
+                            class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-orange-600 hover:bg-orange-500 border border-transparent rounded-xl font-bold text-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition shadow-lg">
+                        Pay LKR {{ number_format($total) }}
+                    </button>
+                </div>
+
+                <div class="text-center text-xs text-slate-500 mt-4 leading-relaxed">
+                    By clicking the button, you agree to our <a href="#" class="underline hover:text-slate-300">Terms & Conditions</a>.
+                    <div class="flex items-center justify-center gap-1.5 mt-3 text-slate-400 font-medium">
+                        <svg class="h-4 w-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <span>Secure Payment</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
     </div>
 </x-app-layout>

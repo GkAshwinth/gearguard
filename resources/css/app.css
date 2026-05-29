@@ -5,3 +5,105 @@
 [x-cloak] {
     display: none;
 }
+
+/* Premium Dark Mode Theme Engine (matching Screenshots) */
+@layer base {
+    body {
+        background-color: #0b0f19 !important; /* Deep space navy/black */
+        color: #f8fafc !important; /* slate-50 */
+        font-family: 'Figtree', sans-serif;
+        antialiased: true;
+    }
+
+    /* Set the default global background of layout wrappers */
+    .min-h-screen, .bg-gray-100, .bg-gray-50, .bg-slate-50, .bg-slate-100 {
+        background-color: #0b0f19 !important;
+        color: #f8fafc !important;
+    }
+
+    /* Style all dynamic white cards to inherit slate-900 / dark card colors */
+    .bg-white, [class*="bg-white"] {
+        background-color: #161e2e !important; /* Lighter slate-800 container */
+        color: #f8fafc !important;
+        border-color: #1f293d !important; /* Darker slate border */
+    }
+
+    /* Headings */
+    h1, h2, h3, h4, h5, h6, .text-gray-900, .text-gray-800, .text-slate-900 {
+        color: #ffffff !important;
+    }
+
+    /* Subtext and descriptions */
+    .text-gray-600, .text-gray-500, .text-gray-400, .text-slate-500, .text-slate-400 {
+        color: #94a3b8 !important; /* slate-400 */
+    }
+
+    /* Globally handle standard borders */
+    .border-gray-100, .border-gray-200, .border-gray-300, .border-slate-100, .border-slate-200 {
+        border-color: #242f41 !important;
+    }
+
+    /* Custom Input and Form Styling under Dark Theme */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    textarea,
+    select {
+        background-color: #1e293b !important;
+        color: #f8fafc !important;
+        border-color: #2e3a4e !important;
+        border-radius: 0.75rem !important; /* rounded-xl */
+    }
+
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder,
+    textarea::placeholder {
+        color: #64748b !important; /* slate-500 */
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #6366f1 !important; /* Indigo accent */
+        box-shadow: 0 0 0 1px #6366f1 !important;
+    }
+
+    /* Navigation item customizations */
+    .bg-white.border-b.border-gray-100 {
+        background-color: #0b0f19 !important; /* Deep dark navigation */
+        border-color: #161e2e !important;
+    }
+}
+
+/* Accent Buttons */
+.bg-[#5c54f1], .bg-indigo-600, .bg-indigo-500 {
+    background-color: #5c54f1 !important;
+    color: #ffffff !important;
+}
+.bg-[#5c54f1]:hover, .bg-indigo-600:hover, .bg-indigo-500:hover {
+    background-color: #4b44d3 !important;
+}
+
+.bg-orange-600, .bg-orange-500 {
+    background-color: #ea580c !important;
+    color: #ffffff !important;
+}
+.bg-orange-600:hover, .bg-orange-500:hover {
+    background-color: #c2410c !important;
+}
+
+/* Secondary Buttons */
+.bg-white.border.border-gray-300 {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+.bg-white.border.border-gray-300:hover {
+    background-color: #334155 !important;
+}
+
