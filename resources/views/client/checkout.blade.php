@@ -33,7 +33,7 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-slate-400">Daily rate</span>
-                        <span class="font-semibold text-white">LKR {{ number_format($equipment->daily_rate) }}</span>
+                        <span class="font-semibold text-white">{{ $equipment->daily_rate }}</span>
                     </div>
                     
                     <hr class="border-slate-800">
