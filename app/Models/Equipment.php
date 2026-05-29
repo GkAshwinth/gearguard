@@ -87,10 +87,13 @@ class Equipment extends Model
     public function getImageUrlAttribute(): string
     {
         if ($this->image_path && str_starts_with($this->image_path, 'http')) {
+            if (str_contains($this->image_path, 'unsplash.com')) {
+                return 'https://placehold.co/800x600/1e293b/cbd5e1?text=' . urlencode($this->name ?? 'Gear');
+            }
             return $this->image_path;
         }
         return $this->image_path
             ? asset('storage/' . $this->image_path)
-            : 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80';
+            : 'https://placehold.co/800x600/1e293b/cbd5e1?text=' . urlencode($this->name ?? 'Gear');
     }
 }

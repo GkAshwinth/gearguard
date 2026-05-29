@@ -43,10 +43,10 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {{-- Categories Loop --}}
                 @foreach([
-                    ['Cameras', 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80'],
-                    ['Lenses', 'https://images.unsplash.com/photo-1617005082133-548c4dd27f35?auto=format&fit=crop&w=600&q=80'],
-                    ['Lighting', 'https://images.unsplash.com/photo-1527011046414-4781f1f94f8c?auto=format&fit=crop&w=600&q=80'],
-                    ['Audio', 'https://images.unsplash.com/photo-1590845947698-8924d7409b56?auto=format&fit=crop&w=600&q=80']
+                    ['Cameras', asset('images/categories/camera.png')],
+                    ['Lenses', asset('images/categories/lenses.png')],
+                    ['Lighting', asset('images/categories/lighting.png')],
+                    ['Audio', asset('images/categories/audio.png')]
                 ] as [$title, $image])
                 <a href="{{ route('equipment.index', ['category' => $title]) }}" 
                    class="relative group h-64 rounded-2xl overflow-hidden shadow-md border border-slate-800/50 block">
