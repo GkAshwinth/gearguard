@@ -14,21 +14,25 @@ class DatabaseSeeder extends Seeder
         // ── Test Users ─────────────────────────────────────────────────────
         // Password for both accounts: "password"
 
-        User::create([
-            'name'           => 'Admin Owner',
-            'email'          => 'admin@gearguard.com',
-            'password'       => Hash::make('password'),
-            'role'           => 'owner',
-            'contact_number' => '0771234567',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@gearguard.com'],
+            [
+                'name'           => 'Admin Owner',
+                'password'       => Hash::make('password'),
+                'role'           => 'owner',
+                'contact_number' => '0771234567',
+            ]
+        );
 
-        User::create([
-            'name'           => 'Test Client',
-            'email'          => 'client@gearguard.com',
-            'password'       => Hash::make('password'),
-            'role'           => 'client',
-            'contact_number' => '0777654321',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'client@gearguard.com'],
+            [
+                'name'           => 'Test Client',
+                'password'       => Hash::make('password'),
+                'role'           => 'client',
+                'contact_number' => '0777654321',
+            ]
+        );
 
         // ── Equipment Seed Data ────────────────────────────────────────────
 
@@ -64,7 +68,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($items as $item) {
-            Equipment::create(array_merge($item, ['status' => 'available']));
+            Equipment::firstOrCreate(
+                ['name' => $item['name']],
+                array_merge($item, ['status' => 'available'])
+            );
         }
     }
 }
