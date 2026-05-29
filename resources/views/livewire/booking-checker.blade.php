@@ -16,13 +16,11 @@
                 <p class="text-green-800 font-bold">✓ Available for these dates!</p>
                 <p class="text-green-700 mt-1">Total Cost: LKR {{ number_format($totalCost, 2) }}</p>
                 
-                <form action="{{ route('bookings.store') }}" method="POST" class="mt-4">
-                    @csrf
-                    <input type="hidden" name="equipment_id" value="{{ $equipment->id }}">
+                <form action="{{ route('booking.checkout', $equipment) }}" method="GET" class="mt-4">
                     <input type="hidden" name="start_date" value="{{ $start_date }}">
                     <input type="hidden" name="end_date" value="{{ $end_date }}">
                     <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 font-semibold">
-                        Confirm Booking
+                        Proceed to Checkout
                     </button>
                 </form>
             </div>
