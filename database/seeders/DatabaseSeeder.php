@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         // ── Test Users ─────────────────────────────────────────────────────
         // Password for both accounts: "password"
 
-        User::firstOrCreate(
+        User::updateOrCreate(
             ['email' => 'admin@gearguard.com'],
             [
                 'name'           => 'Admin Owner',
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        User::firstOrCreate(
+        User::updateOrCreate(
             ['email' => 'client@gearguard.com'],
             [
                 'name'           => 'Test Client',
