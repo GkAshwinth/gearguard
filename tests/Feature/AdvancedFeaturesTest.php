@@ -83,11 +83,11 @@ class AdvancedFeaturesTest extends TestCase
         $user = User::factory()->create(['role' => 'client']);
         
         // Test auth failure is protected and rate-limited under v1
-        $response = $this->getJson('/api/v1/equipment');
+        $response = $this->getJson('/api/equipment');
         $response->assertStatus(401);
 
         // Test login success return formatting and structure under v1
-        $response = $this->postJson('/api/v1/login', [
+        $response = $this->postJson('/api/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
