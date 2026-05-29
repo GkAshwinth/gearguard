@@ -73,22 +73,22 @@
 
                 <div>
                     <label class="block text-sm font-medium text-slate-300 mb-1">Name on Card</label>
-                    <input type="text" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="">
+                    <input type="text" required class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="John Doe">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-slate-300 mb-1">Card Number</label>
-                    <input type="text" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="0000 0000 0000 0000">
+                    <input type="text" required pattern="[0-9\s]{16,19}" title="Please enter a valid 16-digit card number" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="0000 0000 0000 0000">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-1">Expiry Date</label>
-                        <input type="text" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="MM/YY">
+                        <input type="text" required pattern="(0[1-9]|1[0-2])\/[0-9]{2}" title="Please enter a valid expiry date (MM/YY)" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="MM/YY">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-1">CVV</label>
-                        <input type="text" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="123">
+                        <input type="text" required pattern="[0-9]{3,4}" title="Please enter a 3 or 4 digit CVV" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="123">
                     </div>
                 </div>
 
