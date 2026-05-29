@@ -26,6 +26,7 @@ class OwnerBookingManager extends Component
         
         $booking = \App\Models\Booking::findOrFail($id);
         $booking->update(['status' => 'approved']);
+        $this->dispatch('booking-updated');
     }
     
     public function markCompleted($id)
@@ -34,6 +35,7 @@ class OwnerBookingManager extends Component
         
         $booking = \App\Models\Booking::findOrFail($id);
         $booking->update(['status' => 'completed']);
+        $this->dispatch('booking-updated');
     }
 
     public function initiateReject($id)
@@ -60,6 +62,7 @@ class OwnerBookingManager extends Component
         $this->cancellationReason = '';
         
         $this->dispatch('close-modal');
+        $this->dispatch('booking-updated');
     }
     
     public function cancelReject()

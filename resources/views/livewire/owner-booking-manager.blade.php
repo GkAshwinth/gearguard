@@ -1,4 +1,4 @@
-<div>
+<div wire:poll.5s>
     <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
             Booking Management
