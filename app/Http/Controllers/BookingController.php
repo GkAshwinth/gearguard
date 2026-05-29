@@ -195,13 +195,13 @@ class BookingController extends Controller
         }
 
         if ($booking->status !== 'pending') {
-            return redirect()->route('client.dashboard')
+            return redirect()->route('dashboard')
                 ->with('error', 'Only pending bookings can be cancelled.');
         }
 
         $booking->update(['status' => 'cancelled']);
 
-        return redirect()->route('client.dashboard')
+        return redirect()->route('dashboard')
             ->with('success', 'Booking cancelled successfully.');
     }
 }
