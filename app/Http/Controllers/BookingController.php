@@ -94,6 +94,11 @@ class BookingController extends Controller
      */
     public function clientDashboard()
     {
+        // Redirect owners to their specific dashboard
+        if (auth()->user()->isOwner()) {
+            return redirect()->route('owner.dashboard');
+        }
+
         $bookings = auth()->user()->bookings()
             ->with('equipment')
             ->latest()
