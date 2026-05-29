@@ -41,14 +41,10 @@ class BookingController extends Controller
     /**
      * Store the new booking securely.
      */
-    public function store(Request $request)
+    public function store(BookingRequest $request)
     {
-        // 1. Strict Input Validation
-        $validated = $request->validate([
-            'equipment_id' => 'required|exists:equipment,id',
-            'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
+        // 1. Strict Input Validation (handled by BookingRequest)
+        $validated = $request->validated();
 
         $booking = null;
 

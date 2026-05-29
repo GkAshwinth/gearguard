@@ -96,7 +96,7 @@ class ApiController extends Controller
 
         // Cache the API response for 5 minutes (300 seconds)
         $equipment = Cache::remember($cacheKey, 300, function () use ($request) {
-            return \App\Models\Equipment::where('status', 'available')->get();
+            return \App\Models\Equipment::all();
         });
 
         return $this->success('Equipment retrieved successfully.', $equipment);

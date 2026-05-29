@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\ApiController;
 |
 */
 
-Route::prefix('v1')->group(function () {
+Route::group([], function () {
     // Public: token issuance
     Route::post('/login', [ApiController::class, 'login']);
 

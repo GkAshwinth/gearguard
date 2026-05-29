@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     // Booking flow
     Route::get('/checkout/{equipment}', [BookingController::class, 'checkout'])->name('booking.checkout');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-    Route::post('/bookings/legacy-store', [BookingController::class, 'store'])->name('booking.store');
+
     Route::patch('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
 });
 
