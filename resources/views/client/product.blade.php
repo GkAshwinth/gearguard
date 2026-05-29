@@ -21,8 +21,17 @@
 
                 <hr class="my-6">
 
-                {{-- Livewire Booking Checker Component --}}
-                @livewire('booking-checker', ['equipment' => $equipment])
+                {{-- Booking / Read-Only View --}}
+                @if(auth()->check() && auth()->user()->isOwner())
+                    <div class="mt-8 bg-sky-50 rounded-xl p-5 border border-sky-100">
+                        <h3 class="font-semibold text-sky-900 mb-2">Owner View Active</h3>
+                        <p class="text-sm text-sky-700 mb-4">You are currently logged in as an owner. You cannot book equipment, but you can view the upcoming booked dates for this item below.</p>
+                        <a href="{{ route('owner.dashboard') }}" class="text-sm font-medium text-sky-600 hover:text-sky-800">→ Go to Dashboard</a>
+                    </div>
+                @else
+                    {{-- Livewire Booking Checker Component --}}
+                    @livewire('booking-checker', ['equipment' => $equipment])
+                @endif
             </div>
         </div>
 
