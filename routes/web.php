@@ -25,6 +25,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::view('/about', 'about')->name('about');
+Route::view('/contact', 'contact')->name('contact');
+
 Route::get('/browse', [EquipmentController::class, 'index'])->name('equipment.index');
 Route::get('/browse/{equipment}', [EquipmentController::class, 'show'])->name('equipment.show');
 
