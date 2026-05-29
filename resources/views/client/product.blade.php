@@ -15,7 +15,7 @@
                 <p class="text-gray-500 mt-2">{{ $equipment->description }}</p>
 
                 <div class="mt-4 text-3xl font-bold text-sky-600">
-                    LKR {{ number_format($equipment->daily_rate) }}
+                    {{ $equipment->daily_rate }}
                     <span class="text-base font-normal text-gray-400">/day</span>
                 </div>
 
