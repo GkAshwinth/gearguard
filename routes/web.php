@@ -62,8 +62,4 @@ Route::middleware(['auth', 'role:owner', 'owner.2fa'])->prefix('owner')->name('o
     Route::delete('/inventory/{equipment}', [EquipmentController::class, 'destroy'])->name('equipment.destroy');
 });
 
-Route::get('/force-seed', function () {
-    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
-    return 'Database successfully migrated and seeded! You can now go back to the homepage.';
-});
+
