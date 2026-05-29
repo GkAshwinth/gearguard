@@ -86,14 +86,22 @@ class Equipment extends Model
      */
     public function getImageUrlAttribute(): string
     {
+        $categoryMap = [
+            'Cameras' => asset('images/categories/camera.png'),
+            'Lenses' => asset('images/categories/lenses.png'),
+            'Lighting' => asset('images/categories/lighting.png'),
+            'Audio' => asset('images/categories/audio.png'),
+        ];
+        $fallback = $categoryMap[$this->category] ?? asset('images/categories/camera.png');
+
         if ($this->image_path && str_starts_with($this->image_path, 'http')) {
             if (str_contains($this->image_path, 'unsplash.com')) {
-                return 'https://placehold.co/800x600/1e293b/cbd5e1?text=' . urlencode($this->name ?? 'Gear');
+                return $fallback;
             }
             return $this->image_path;
         }
         return $this->image_path
             ? asset('storage/' . $this->image_path)
-            : 'https://placehold.co/800x600/1e293b/cbd5e1?text=' . urlencode($this->name ?? 'Gear');
+            : $fallback;
     }
 }
