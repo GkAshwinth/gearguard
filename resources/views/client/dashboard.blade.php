@@ -58,6 +58,16 @@
                         </button>
                     </form>
                     @endif
+
+                    @if($booking->status === 'approved')
+                    <div class="flex-shrink-0 bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex flex-col justify-center items-center text-center w-full sm:w-48 shadow-inner">
+                        <svg class="h-8 w-8 text-emerald-500 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="text-sm font-bold text-emerald-700 mb-1">Approved!</p>
+                        <p class="text-xs text-emerald-600 font-medium leading-tight">Return by:<br><span class="text-emerald-800 font-bold text-sm">{{ $booking->end_date->format('M d, Y') }}</span></p>
+                    </div>
+                    @endif
                 </div>
             </div>
             @endforeach
