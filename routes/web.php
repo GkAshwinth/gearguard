@@ -47,6 +47,10 @@ Route::middleware(['auth'])->group(function () {
     // Payment Processing
     Route::get('/payment/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
     Route::get('/payment/cancel', [\App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.cancel');
+
+    // GearGuard Pro Subscription
+    Route::get('/pro', [\App\Http\Controllers\ProController::class, 'index'])->name('pro.index');
+    Route::post('/pro/subscribe', [\App\Http\Controllers\ProController::class, 'subscribe'])->name('pro.subscribe');
 });
 
 // ── Owner / Admin Routes ───────────────────────────────────────────────────

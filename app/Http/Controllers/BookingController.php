@@ -34,9 +34,16 @@ class BookingController extends Controller
         }
 
         $days  = (new \DateTime($startDate))->diff(new \DateTime($endDate))->days + 1;
-        $total = $days * (float) $equipment->getRawOriginal('daily_rate');
+        $originalTotal = $days * (float) $equipment->getRawOriginal('daily_rate');
+        $discount = 0;
 
-        return view('client.checkout', compact('equipment', 'startDate', 'endDate', 'days', 'total'));
+        if (auth()->user()->is_pro) {
+            $discount = $originalTotal * 0.15;
+        }
+
+        $total = $originalTotal - $discount;
+
+        return view('client.checkout', compact('equipment', 'startDate', 'endDate', 'days', 'total', 'originalTotal', 'discount'));
     }
 
     /**
@@ -67,11 +74,11 @@ class BookingController extends Controller
             // Calculate total cost securely on the server side to satisfy DB constraint
             $equipment = Equipment::withoutGlobalScopes()->findOrFail($validated['equipment_id']);
             $days = \Carbon\Carbon::parse($validated['start_date'])->diffInDays(\Carbon\Carbon::parse($validated['end_date'])) + 1;
-            $totalCost = $days * (float) $equipment->getRawOriginal('daily_rate');
-
-            // Add optional insurance fee
-            if ($request->has('insurance')) {
-                $totalCost += 2500;
+            $originalTotalCost = $days * (float) $equipment->getRawOriginal('daily_rate');
+            
+            $totalCost = $originalTotalCost;
+            if (auth()->user()->is_pro) {
+                $totalCost = $originalTotalCost * 0.85; // 15% discount
             }
 
             // 3. Save the booking
