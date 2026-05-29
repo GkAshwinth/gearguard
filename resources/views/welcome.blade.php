@@ -27,8 +27,8 @@
             
             {{-- Right column: Large Graphic / Crop Image (matching cat/gray snout aesthetic) --}}
             <div class="relative hidden lg:block h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-slate-800">
-                <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1000&q=80" 
-                     class="w-full h-full object-cover grayscale opacity-90 contrast-125" 
+                <img src="{{ asset('images/categories/camera.png') }}" 
+                     class="w-full h-full object-cover opacity-90 contrast-125" 
                      alt="Professional Equipment Detail">
                 <div class="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-transparent to-transparent"></div>
             </div>
