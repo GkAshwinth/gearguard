@@ -20,7 +20,24 @@ class PaymentController extends Controller
             return redirect()->route('dashboard')->with('error', 'Invalid payment session.');
         }
 
-        Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_mock'));
+        $stripeSecret = env('STRIPE_SECRET', 'sk_test_mock');
+
+        // MOCK BYPASS: Accept mock session IDs for testing/demo purposes without Stripe
+        if ($stripeSecret === 'sk_test_mock' && str_starts_with($sessionId, 'mock_session_')) {
+            $booking = Booking::findOrFail($bookingId);
+            
+            $booking->update([
+                'payment_status' => 'paid',
+                'transaction_id' => $sessionId,
+            ]);
+
+            SendBookingConfirmationEmail::dispatch($booking);
+            BookingCreated::dispatch($booking);
+
+            return redirect()->route('dashboard')->with('success', 'Payment successful (Mock Mode)! Your booking is now awaiting admin approval.');
+        }
+
+        Stripe::setApiKey($stripeSecret);
 
         try {
             $session = Session::retrieve($sessionId);

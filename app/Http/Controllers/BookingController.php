@@ -11,6 +11,7 @@ use App\Http\Requests\BookingRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
@@ -81,7 +82,17 @@ class BookingController extends Controller
         });
 
         // 4. Initialize Stripe Checkout
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_mock'));
+        $stripeSecret = env('STRIPE_SECRET', 'sk_test_mock');
+        
+        // MOCK BYPASS: If no real Stripe key is provided, fake the checkout for testing/demo purposes.
+        if ($stripeSecret === 'sk_test_mock') {
+            return redirect()->route('payment.success', [
+                'booking' => $booking->id,
+                'session_id' => 'mock_session_' . Str::random(10)
+            ]);
+        }
+
+        \Stripe\Stripe::setApiKey($stripeSecret);
 
         $equipment = Equipment::withoutGlobalScopes()->findOrFail($validated['equipment_id']);
 
