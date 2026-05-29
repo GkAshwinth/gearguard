@@ -64,38 +64,43 @@
                 </button>
             </div>
 
-            {{-- Stripe Checkout Form --}}
-            <form action="{{ route('bookings.store') }}" method="POST" class="space-y-6 mt-6">
+            {{-- Mock Checkout Form --}}
+            <form action="{{ route('bookings.store') }}" method="POST" class="space-y-5 mt-6">
                 @csrf
                 <input type="hidden" name="equipment_id" value="{{ $equipment->id }}">
                 <input type="hidden" name="start_date" value="{{ $startDate }}">
                 <input type="hidden" name="end_date" value="{{ $endDate }}">
 
-                <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-5 text-center">
-                    <svg class="h-10 w-10 text-slate-400 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                    </svg>
-                    <h3 class="text-white font-semibold mb-1">Secure Payment via Stripe</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">
-                        You will be redirected to Stripe's highly secure payment gateway to complete your transaction. No card details are stored on our servers.
-                    </p>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Name on Card</label>
+                    <input type="text" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="">
                 </div>
 
-                <div class="pt-2">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Card Number</label>
+                    <input type="text" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="0000 0000 0000 0000">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Expiry Date</label>
+                        <input type="text" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="MM/YY">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">CVV</label>
+                        <input type="text" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" placeholder="123">
+                    </div>
+                </div>
+
+                <div class="pt-4">
                     <button type="submit"
-                            class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-[#635BFF] hover:bg-[#5249E5] border border-transparent rounded-xl font-bold text-lg text-white focus:outline-none focus:ring-2 focus:ring-[#635BFF] focus:ring-offset-2 focus:ring-offset-slate-900 transition shadow-lg">
-                        Proceed to Secure Checkout (LKR {{ number_format($total) }})
+                            class="w-full py-3 bg-[#ea580c] hover:bg-[#c2410c] rounded-md font-bold text-lg text-white transition shadow-sm">
+                        Pay LKR {{ number_format($total, 2) }}
                     </button>
                 </div>
 
                 <div class="text-center text-xs text-slate-500 mt-4 leading-relaxed">
                     By clicking the button, you agree to our <a href="#" class="underline hover:text-slate-300">Terms & Conditions</a>.
-                    <div class="flex items-center justify-center gap-1.5 mt-3 text-slate-400 font-medium">
-                        <svg class="h-4 w-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                        <span>Protected by Stripe</span>
-                    </div>
                 </div>
             </form>
         </div>
