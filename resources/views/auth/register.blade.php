@@ -22,6 +22,10 @@
                 <input id="email" class="block w-full border border-slate-800 focus:border-indigo-500 focus:ring-indigo-500 bg-slate-800/60 text-slate-100 placeholder-slate-400 rounded-xl px-4 py-3 shadow-sm" type="email" name="email" :value="old('email')" placeholder="Email address" required autocomplete="username" />
             </div>
 
+            <div>
+                <input id="contact_number" class="block w-full border border-slate-800 focus:border-indigo-500 focus:ring-indigo-500 bg-slate-800/60 text-slate-100 placeholder-slate-400 rounded-xl px-4 py-3 shadow-sm" type="tel" name="contact_number" :value="old('contact_number')" placeholder="Phone Number" required autocomplete="tel" />
+            </div>
+
             <div x-data="{ show: false }">
                 <div class="relative">
                     <input id="password" class="block w-full border border-slate-800 focus:border-indigo-500 focus:ring-indigo-500 bg-slate-800/60 text-slate-100 placeholder-slate-400 rounded-xl px-4 py-3 pr-10 shadow-sm" x-bind:type="show ? 'text' : 'password'" name="password" placeholder="Password" required autocomplete="new-password" />
