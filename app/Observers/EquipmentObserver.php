@@ -54,6 +54,11 @@ class EquipmentObserver
             'changed_fields' => array_keys($changes),
             'updated_by'   => Auth::id() ?? 'system',
         ]);
+
+        // Advanced Feature: Cache Invalidation
+        if (isset($changes['category']) || isset($changes['status'])) {
+            \Illuminate\Support\Facades\Cache::forget('equipment_categories');
+        }
     }
 
     /**

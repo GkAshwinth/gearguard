@@ -22,5 +22,8 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production') {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
+
+        // Advanced Feature: Registering Eloquent Observers
+        \App\Models\Equipment::observe(\App\Observers\EquipmentObserver::class);
     }
 }

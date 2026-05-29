@@ -19,21 +19,26 @@ class EquipmentCatalog extends Component
 
     public function render()
     {
-        $query = Equipment::where('status', 'available');
+        // 1. Cache the categories list forever (invalidated automatically in EquipmentObserver)
+        $categories = \Illuminate\Support\Facades\Cache::rememberForever('equipment_categories', function () {
+            return Equipment::select('category')->distinct()->pluck('category');
+        });
 
-        // Apply search filter
-        if ($this->search) {
-            $query->where('name', 'like', '%' . $this->search . '%');
-        }
+        // 2. Cache the paginated results based on the current search, category, and page
+        $cacheKey = 'equipment_catalog_' . md5($this->search . '_' . $this->category . '_' . $this->getPage());
         
-        // Apply category filter
-        if ($this->category) {
-            $query->where('category', $this->category);
-        }
+        $equipments = \Illuminate\Support\Facades\Cache::remember($cacheKey, 60, function () {
+            $query = Equipment::all()->toQuery(); // Applies global scope safely
+            
+            if ($this->search) {
+                $query->where('name', 'like', '%' . $this->search . '%');
+            }
+            if ($this->category) {
+                $query->where('category', $this->category);
+            }
+            return $query->paginate(9);
+        });
 
-        return view('livewire.equipment-catalog', [
-            'equipments' => $query->paginate(9),
-            'categories' => Equipment::select('category')->distinct()->pluck('category'),
-        ]);
+        return view('livewire.equipment-catalog', compact('equipments', 'categories'));
     }
 }
